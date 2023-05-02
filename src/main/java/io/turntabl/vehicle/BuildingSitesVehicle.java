@@ -32,8 +32,4 @@ public class BuildingSitesVehicle extends Vehicle{
     public double getBaseCharge() {
         return baseCharge;
     }
-
-    public double getWeight() {
-        return weight;
-    }
 }
