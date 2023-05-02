@@ -17,7 +17,9 @@ class BuildingSitesVehicleTest {
     @Test
     void testCalcChargeBuildingSitesVehicleOver150() throws InvalidWeightException {
         BuildingSitesVehicle buildingSitesVehicle = new BuildingSitesVehicle("GR 4325-16", 175.0, person);
-        assertEquals(40, buildingSitesVehicle.calcCharge());
+        Person person = new Person("Kobe", 7864539);
+        buildingSitesVehicle.addOwner(person);
+        assertEquals(80, buildingSitesVehicle.calcCharge());
     }
 
     @Test

@@ -14,7 +14,9 @@ class PrivateUseCarTest {
     }
     @Test
     void testCalcChargePrivateUseBuilding(){
-        assertEquals(privateUseCar.getParkingCharge(), privateUseCar.calcCharge());
+        Person person = new Person("Kobe", 97887);
+        privateUseCar.addOwner(person);
+        assertEquals(40.0, privateUseCar.calcCharge());
     }
 
 }

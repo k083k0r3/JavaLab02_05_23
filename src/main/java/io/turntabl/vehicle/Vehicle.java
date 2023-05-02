@@ -11,6 +11,7 @@ public abstract class Vehicle {
     private final
     ArrayList<Person> owners;
     private final VehicleType vehicleType;
+    private boolean hasPermit;
 
     public Vehicle(String numberPlate, VehicleType vehicleType, Person person) {
         this.numberPlate = numberPlate;
@@ -37,7 +38,15 @@ public abstract class Vehicle {
                 '}';
     }
 
-//    public void listOwners(){
+    public boolean getHasPermit() {
+        return hasPermit;
+    }
+
+    public void setHasPermit(boolean hasPermit) {
+        this.hasPermit = hasPermit;
+    }
+
+    //    public void listOwners(){
 //        for(Person entry: owners){
 //            System.out.println(entry.getName());
 //        }

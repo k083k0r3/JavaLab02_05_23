@@ -21,11 +21,11 @@ public class BuildingSitesVehicle extends Vehicle{
     @Override
     public double calcCharge() {
         if(weight - 150 <= 0){
-            return baseCharge;
+            return (getOwners().size()) * baseCharge;
         } else {
             double diff = weight - 150;
             double multiplier = (Math.ceil(diff /20.0));
-            return baseCharge + (multiplier * extraCharge);
+            return (getOwners().size()) * (baseCharge + (multiplier * extraCharge));
         }
     }
 

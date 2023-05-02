@@ -31,6 +31,7 @@ public class TownCouncil {
             throw new PermitAlreadyIssuedException("Permit has already been Issued");
         }
         parkingPermitsIssued.put(vehicle, person.getNiNumber());
+        vehicle.setHasPermit(true);
     }
 
 }

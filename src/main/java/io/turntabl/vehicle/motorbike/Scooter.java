@@ -14,6 +14,6 @@ public class Scooter extends Motorbike{
 
     @Override
     public double calcCharge() {
-        return parkingCharge;
+        return (getOwners().size()) * parkingCharge;
     }
 }
