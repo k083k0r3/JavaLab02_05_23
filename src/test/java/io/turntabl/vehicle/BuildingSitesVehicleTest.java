@@ -19,7 +19,7 @@ class BuildingSitesVehicleTest {
         BuildingSitesVehicle buildingSitesVehicle = new BuildingSitesVehicle("GR 4325-16", 175.0, person);
         Person person = new Person("Kobe", 7864539);
         buildingSitesVehicle.addOwner(person);
-        assertEquals(80, buildingSitesVehicle.calcCharge());
+        assertEquals(40, buildingSitesVehicle.calcCharge());
     }
 
     @Test

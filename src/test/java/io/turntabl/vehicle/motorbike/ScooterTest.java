@@ -20,7 +20,7 @@ class ScooterTest {
     void testScooterCharge(){
         Person person = new Person("Kobe", 9847539);
         scooter.addOwner(person);
-        assertEquals(14.0, scooter.calcCharge());
+        assertEquals(7.0, scooter.calcCharge());
     }
 
 }

@@ -46,6 +46,10 @@ public abstract class Vehicle {
         this.hasPermit = hasPermit;
     }
 
+    public VehicleType getVehicleType() {
+        return vehicleType;
+    }
+
     //    public void listOwners(){
 //        for(Person entry: owners){
 //            System.out.println(entry.getName());

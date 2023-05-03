@@ -25,7 +25,7 @@ public class BuildingSitesVehicle extends Vehicle{
         } else {
             double diff = weight - 150;
             double multiplier = (Math.ceil(diff /20.0));
-            return (getOwners().size()) * (baseCharge + (multiplier * extraCharge));
+            return (baseCharge + (multiplier * extraCharge));
         }
     }
 

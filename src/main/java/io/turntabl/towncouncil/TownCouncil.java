@@ -26,12 +26,22 @@ public class TownCouncil {
             }
     }
 
-    public void issueParkingPermit(Person person, Vehicle vehicle) throws PermitAlreadyIssuedException {
+    protected void issueParkingPermit(Person person, Vehicle vehicle) throws PermitAlreadyIssuedException {
         if(parkingPermitsIssued.containsKey(vehicle)){
             throw new PermitAlreadyIssuedException("Permit has already been Issued");
         }
         parkingPermitsIssued.put(vehicle, person.getNiNumber());
         vehicle.setHasPermit(true);
+    }
+
+    public int countVehicleType (VehicleType vehicleType){
+        int res = 0;
+        for(Vehicle vehicle: parkingPermitsIssued.keySet()){
+            if (vehicle.getVehicleType().equals(vehicleType)){
+                res++;
+            }
+        }
+        return res;
     }
 
 }
