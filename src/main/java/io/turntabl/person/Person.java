@@ -3,9 +3,9 @@ package io.turntabl.person;
 public class Person {
 
     private String name;
-    private int niNumber;
+    private String niNumber;
 
-    public Person(String name, int niNumber) {
+    public Person(String name, String niNumber) {
         this.name = name;
         this.niNumber = niNumber;
     }
@@ -14,7 +14,7 @@ public class Person {
         return name;
     }
 
-    public int getNiNumber() {
+    public String getNiNumber() {
         return niNumber;
     }
 }

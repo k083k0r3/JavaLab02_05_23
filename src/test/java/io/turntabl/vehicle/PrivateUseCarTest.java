@@ -1,22 +1,44 @@
 package io.turntabl.vehicle;
 import io.turntabl.person.Person;
+import io.turntabl.towncouncil.TownCouncil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@ExtendWith(MockitoExtension.class)
 class PrivateUseCarTest {
-    PrivateUseCar privateUseCar;
+
+    private PrivateUseCar privateUseCar;
+    private Person person;
+    private ArrayList<Person> owners;
+
     @BeforeEach
     void setUp(){
-        Person person = new Person("Emma", 78358293);
-        privateUseCar = new PrivateUseCar("GT 4570-19", person);
-    }
-    @Test
-    void testCalcChargePrivateUseBuilding(){
-        Person person = new Person("Kobe", 97887);
-        privateUseCar.addOwner(person);
-        assertEquals(40.0, privateUseCar.calcCharge());
+        owners = new ArrayList<>();
+        person = new Person("Emma", "78358293");
+        owners.add(person);
+        privateUseCar = new PrivateUseCar("GT 4570-19", owners);
     }
 
+    @Test
+    void testCalcChargePrivateUseCarSingleOwner(){
+        //given
+        assertEquals(20.0, privateUseCar.calcCharge());
+    }
+
+    @Test
+    void testCalcChargePrivateUseCarMultipleOwners(){
+        //given
+        Person person = new Person("Kobe", "9430495");
+        owners.add(person);
+        //when
+        double charge = privateUseCar.calcCharge();
+        assertEquals(40.0, charge);
+    }
 }

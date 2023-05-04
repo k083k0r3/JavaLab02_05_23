@@ -8,8 +8,8 @@ import java.util.ArrayList;
 
 public abstract class Motorbike extends Vehicle {
 
-    public Motorbike(String numberPlate, Person person) {
-        super(numberPlate, VehicleType.MOTORBIKE, person);
+    public Motorbike(String numberPlate, ArrayList<Person> owners) {
+        super(numberPlate, VehicleType.MOTORBIKE, owners);
     }
 
     @Override

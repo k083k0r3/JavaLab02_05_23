@@ -3,14 +3,16 @@ import io.turntabl.exception.InvalidWeightException;
 import io.turntabl.person.Person;
 import io.turntabl.vehicletype.VehicleType;
 
+import java.util.ArrayList;
+
 
 public class BuildingSitesVehicle extends Vehicle{
 
     private final double baseCharge = 30.0;
     private final double extraCharge = 5.0;
     private final double weight;
-    public BuildingSitesVehicle(String numberPlate, double weight, Person person) throws InvalidWeightException {
-        super(numberPlate, VehicleType.BUILDING, person);
+    public BuildingSitesVehicle(String numberPlate, double weight, ArrayList<Person> owners) throws InvalidWeightException {
+        super(numberPlate, VehicleType.BUILDING, owners);
         if(weight > 0) {
             this.weight = weight;
         } else {

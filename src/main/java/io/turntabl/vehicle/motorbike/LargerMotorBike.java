@@ -1,17 +1,16 @@
 package io.turntabl.vehicle.motorbike;
 import io.turntabl.person.Person;
 
+import java.util.ArrayList;
+
 public class LargerMotorBike extends Motorbike{
 
     private final double parkingCharge = 10.0;
 
-    public LargerMotorBike(String numberPlate, Person person) {
-        super(numberPlate, person);
+    public LargerMotorBike(String numberPlate, ArrayList<Person> owners) {
+        super(numberPlate, owners);
     }
 
-    public double getParkingCharge() {
-        return parkingCharge;
-    }
 
     @Override
     public double calcCharge() {

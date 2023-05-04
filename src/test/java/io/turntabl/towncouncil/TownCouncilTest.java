@@ -1,73 +1,89 @@
 package io.turntabl.towncouncil;
 
+import io.turntabl.exception.InvalidWeightException;
 import io.turntabl.exception.PermitAlreadyIssuedException;
 import io.turntabl.exception.UserNotAuthorisedException;
+import io.turntabl.permitissueservice.PermitIssuerService;
 import io.turntabl.person.Person;
+import io.turntabl.vehicle.BuildingSitesVehicle;
 import io.turntabl.vehicle.PrivateUseCar;
 import io.turntabl.vehicle.Vehicle;
 import io.turntabl.vehicle.motorbike.LargerMotorBike;
 import io.turntabl.vehicletype.VehicleType;
+import io.turntabl.verificationservice.VerificationService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyBoolean;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.*;
 
+@ExtendWith(MockitoExtension.class)
 class TownCouncilTest {
+    @Mock
+    VerificationService verificationService;
+    @Mock
+    PermitIssuerService permitIssuerService;
     TownCouncil townCouncil;
+    ArrayList<Person> owners;
 
     @BeforeEach
     void setUp(){
-        townCouncil = new TownCouncil();
+        owners = new ArrayList<>();
+        townCouncil = new TownCouncil(verificationService, permitIssuerService);
     }
 
     @Test
-    void testValidatePermitDoesNotThrowException(){
-        assertDoesNotThrow(() -> {
-            Person person = new Person("Dufie", 738462);
-            Vehicle vehicle = new PrivateUseCar("GR 456-23", person);
-            townCouncil.validatePermit(person, vehicle);
-        });
-    }
-
-    @Test
-    void testIssueParkingPermitDoesNotThrowPermitAlreadyIssued(){
-        assertThrows(PermitAlreadyIssuedException.class, () -> {
-            Person person1 = new Person("Mark", 8384234);
-            Vehicle vehicle = new PrivateUseCar("GR 456-23", person1);
-            townCouncil.validatePermit(person1, vehicle);
-            townCouncil.issueParkingPermit(person1, vehicle);
-        });
-    }
-
-    @Test
-    void testValidatePermitThrowsUserNotPermitted(){
+    void testIssueParkingPermitThrowsUserNotAuthorisedException(){
         assertThrows(UserNotAuthorisedException.class, () -> {
-            Person person1 = new Person("Mark", 8384234);
-            Person person = new Person("Dufie",738462);
-            Vehicle vehicle = new PrivateUseCar("GR 456-23", person1);
-            townCouncil.validatePermit(person, vehicle);
+            //Given
+            Person notOwner = new Person("Mark", "874534");
+            Person person = new Person("Kobe", "876382");
+            PrivateUseCar privateUseCar = new PrivateUseCar("GT 7897-13", owners);
+
+            when(verificationService.verifyPerson(notOwner, privateUseCar)).thenReturn(false);
+            //when
+            townCouncil.issueParkingPermit(privateUseCar, notOwner);
         });
     }
 
+    @Test
+    void testIssueParkingPermitThrowsPermitAlreadyIssuedException(){
+        assertThrows(PermitAlreadyIssuedException.class, () -> {
+            //Given
+            ArrayList<Person> owners = new ArrayList<>();
+            Person person = new Person("Ri", "87687687");
+            owners.add(person);
+            PrivateUseCar privateUseCar = new PrivateUseCar("GE 765578-23", owners);
+            when(verificationService.verifyPerson(person, privateUseCar)).thenReturn(true);
+
+            //when
+            townCouncil.issueParkingPermit(privateUseCar, person);
+            townCouncil.issueParkingPermit(privateUseCar, person);
+
+        });
+    }
 
     @Test
-    void testVehicleTypeCount(){
-        TownCouncil tc1 = new TownCouncil();
+    void testIssuePermitForBuildingVehiclesDoesNotUseInterface() throws InvalidWeightException, UserNotAuthorisedException, PermitAlreadyIssuedException {
+        //Given
+        ArrayList<Person> owners = new ArrayList<>();
+        TownCouncil townCouncil = mock(TownCouncil.class);
+        Person person = new Person("Mark", "98798");
+        owners.add(person);
+        BuildingSitesVehicle buildingSitesVehicle = new BuildingSitesVehicle("GY 898-20", 90, owners);
+        when(verificationService.verifyPerson(person, buildingSitesVehicle)).thenReturn(true);
 
-        Person emma = new Person("Emma", 8937343);
-        LargerMotorBike largerMotorBike = new LargerMotorBike("M 749-12", emma);
+        //when
 
-        Person gerald = new Person("Gerald", 8937343);
-        LargerMotorBike largerMotorBike1 = new LargerMotorBike("M 749-12", gerald);
-        try {
-            tc1.validatePermit(emma, largerMotorBike);
-            tc1.validatePermit(gerald, largerMotorBike1);
-        }catch (UserNotAuthorisedException e){
-            System.out.println("User Not Authorised");
-        }catch (PermitAlreadyIssuedException e){
-            System.out.println("Permit Already Issued");
-        }
-        assertEquals(2, tc1.countVehicleType(VehicleType.MOTORBIKE));
+
     }
 
 }

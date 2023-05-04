@@ -11,13 +11,11 @@ public abstract class Vehicle {
     private final
     ArrayList<Person> owners;
     private final VehicleType vehicleType;
-    private boolean hasPermit;
 
-    public Vehicle(String numberPlate, VehicleType vehicleType, Person person) {
+    public Vehicle(String numberPlate, VehicleType vehicleType, ArrayList<Person> owners) {
         this.numberPlate = numberPlate;
         this.vehicleType = vehicleType;
-        owners = new ArrayList<>();
-        owners.add(person);
+        this.owners = owners;
     }
 
 
@@ -29,36 +27,13 @@ public abstract class Vehicle {
         getOwners().add(person);
     }
 
-    @Override
-    public String toString() {
-        return "Vehicle{" +
-                "numberPlate='" + numberPlate + '\'' +
-                ", owners=" + owners +
-                ", vehicleType=" + vehicleType +
-                '}';
-    }
-
-    public boolean getHasPermit() {
-        return hasPermit;
-    }
-
-    public void setHasPermit(boolean hasPermit) {
-        this.hasPermit = hasPermit;
-    }
-
     public VehicleType getVehicleType() {
         return vehicleType;
     }
 
-    //    public void listOwners(){
-//        for(Person entry: owners){
-//            System.out.println(entry.getName());
-//        }
-//    }
-
-//    public VehicleType getVehicleType() {
-//        return vehicleType;
-//    }
+    public String getNumberPlate() {
+        return numberPlate;
+    }
 
     public abstract double calcCharge();
 }
