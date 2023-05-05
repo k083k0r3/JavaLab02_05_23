@@ -24,5 +24,4 @@ class LargerMotorBikeTest {
     void testLargerMotorBikeCharge(){
         assertEquals(10.0, largerMotorBike.calcCharge());
     }
-
 }

@@ -1,5 +1,4 @@
 package io.turntabl.vehicle.motorbike;
-
 import io.turntabl.person.Person;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -9,7 +8,6 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ScooterTest {
-
     Scooter scooter;
 
     @BeforeEach
@@ -26,5 +24,4 @@ class ScooterTest {
         scooter.addOwner(person);
         assertEquals(7.0, scooter.calcCharge());
     }
-
 }

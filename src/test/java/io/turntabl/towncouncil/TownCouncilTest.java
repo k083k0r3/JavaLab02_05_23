@@ -42,13 +42,12 @@ class TownCouncilTest {
 
     @Test
     void testIssueParkingPermitThrowsUserNotAuthorisedException(){
+        //Given
+        Person notOwner = new Person("Mark", "874534");
+        Person person = new Person("Kobe", "876382");
+        PrivateUseCar privateUseCar = new PrivateUseCar("GT 7897-13", owners);
+        when(verificationService.verifyPerson(notOwner, privateUseCar)).thenReturn(false);
         assertThrows(UserNotAuthorisedException.class, () -> {
-            //Given
-            Person notOwner = new Person("Mark", "874534");
-            Person person = new Person("Kobe", "876382");
-            PrivateUseCar privateUseCar = new PrivateUseCar("GT 7897-13", owners);
-
-            when(verificationService.verifyPerson(notOwner, privateUseCar)).thenReturn(false);
             //when
             townCouncil.issueParkingPermit(privateUseCar, notOwner);
         });
@@ -56,34 +55,29 @@ class TownCouncilTest {
 
     @Test
     void testIssueParkingPermitThrowsPermitAlreadyIssuedException(){
+        //Given
+        Person person = new Person("Ri", "87687687");
+        owners.add(person);
+        PrivateUseCar privateUseCar = new PrivateUseCar("GE 765578-23", owners);
+        when(verificationService.verifyPerson(person, privateUseCar)).thenReturn(true);
         assertThrows(PermitAlreadyIssuedException.class, () -> {
-            //Given
-            ArrayList<Person> owners = new ArrayList<>();
-            Person person = new Person("Ri", "87687687");
-            owners.add(person);
-            PrivateUseCar privateUseCar = new PrivateUseCar("GE 765578-23", owners);
-            when(verificationService.verifyPerson(person, privateUseCar)).thenReturn(true);
-
             //when
             townCouncil.issueParkingPermit(privateUseCar, person);
             townCouncil.issueParkingPermit(privateUseCar, person);
-
         });
     }
 
-    @Test
-    void testIssuePermitForBuildingVehiclesDoesNotUseInterface() throws InvalidWeightException, UserNotAuthorisedException, PermitAlreadyIssuedException {
-        //Given
-        ArrayList<Person> owners = new ArrayList<>();
-        TownCouncil townCouncil = mock(TownCouncil.class);
-        Person person = new Person("Mark", "98798");
-        owners.add(person);
-        BuildingSitesVehicle buildingSitesVehicle = new BuildingSitesVehicle("GY 898-20", 90, owners);
-        when(verificationService.verifyPerson(person, buildingSitesVehicle)).thenReturn(true);
-
-        //when
-
-
-    }
+//    @Test
+//    void testIssuePermitForBuildingVehiclesDoesNotUseInterface() throws InvalidWeightException, UserNotAuthorisedException, PermitAlreadyIssuedException {
+//        //Given
+//        Person person = new Person("Mark", "98798");
+//        owners.add(person);
+//        BuildingSitesVehicle buildingSitesVehicle = new BuildingSitesVehicle("GY 898-20", 90, owners);
+//        when(verificationService.verifyPerson(person, buildingSitesVehicle)).thenReturn(true);
+//
+//        //when
+//
+//
+//    }
 
 }

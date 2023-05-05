@@ -53,7 +53,6 @@ class BuildingSitesVehicleTest {
     @Test
     void testThrowsInvalidWeightException(){
         assertThrows(InvalidWeightException.class, () -> {
-            Person person = new Person("Dufie", "2354655");
             owners.add(person);
             BuildingSitesVehicle buildingSitesVehicle = new BuildingSitesVehicle("GR 4325-16", -30, owners);
         });

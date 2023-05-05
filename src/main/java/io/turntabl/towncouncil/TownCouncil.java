@@ -23,7 +23,6 @@ public class TownCouncil{
         parkingPermitsIssued = new HashMap<>();
     }
 
-    //Dont return NumberPlate
     //Return Ni Number / Create Permit Number
     protected String issueParkingPermit(Vehicle vehicle, Person person) throws PermitAlreadyIssuedException, UserNotAuthorisedException {
         validatePermit(vehicle, person);
@@ -34,7 +33,7 @@ public class TownCouncil{
         }
         permitIssuerService.issuePermit(vehicle);
         issuePermit(vehicle, person);
-        return (vehicle.getNumberPlate());
+        return (person.getNiNumber());
     }
 
     private void validatePermit(Vehicle vehicle, Person person) throws UserNotAuthorisedException {
@@ -47,10 +46,6 @@ public class TownCouncil{
         parkingPermitsIssued.put(vehicle, person.getNiNumber());
         return person.getNiNumber();
     }
-
-
-
-
 
 
 
